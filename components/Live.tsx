@@ -61,23 +61,22 @@ type Props = {
   // Broadcast the reaction to other users (every 100ms)
     useInterval(() => {
         if (cursorState.mode === CursorMode.Reaction && cursorState.isPressed && cursor) {
-        // concat all the reactions created on mouse click
-        setReactions((reactions) =>
-            reactions.concat([
-            {
-                point: { x: cursor.x, y: cursor.y },
+            // concat all the reactions created on mouse click
+            setReactions((reactions) =>
+                reactions.concat([
+                    {
+                        point: { x: cursor.x, y: cursor.y },
+                        value: cursorState.reaction,
+                        timestamp: Date.now(),
+                    },
+                ])
+            );
+        // Broadcast the reaction to other users
+            broadcast({
+                x: cursor.x,
+                y: cursor.y,
                 value: cursorState.reaction,
-                timestamp: Date.now(),
-            },
-            ])
-    );
-
-      // Broadcast the reaction to other users
-        broadcast({
-            x: cursor.x,
-            y: cursor.y,
-            value: cursorState.reaction,
-        });
+            });
         }
     }, 100);
 
@@ -90,13 +89,13 @@ type Props = {
     useEventListener((eventData) => {
         const event = eventData.event as ReactionEvent;
         setReactions((reactions) =>
-        reactions.concat([
-            {
-            point: { x: event.x, y: event.y },
-            value: event.value,
-            timestamp: Date.now(),
-            },
-        ])
+            reactions.concat([
+                {
+                point: { x: event.x, y: event.y },
+                value: event.value,
+                timestamp: Date.now(),
+                },
+            ])
         );
     });
 
@@ -237,23 +236,23 @@ type Props = {
 
             {/* Render the reactions */}
             {reactions.map((reaction) => (
-            <FlyingReaction
-                key={reaction.timestamp.toString()}
-                x={reaction.point.x}
-                y={reaction.point.y}
-                timestamp={reaction.timestamp}
-                value={reaction.value}
-            />
+                <FlyingReaction
+                    key={reaction.timestamp.toString()}
+                    x={reaction.point.x}
+                    y={reaction.point.y}
+                    timestamp={reaction.timestamp}
+                    value={reaction.value}
+                />
             ))}
 
             {/* If cursor is in chat mode, show the chat cursor */}
             {cursor && (
-            <CursorChat
-                cursor={cursor}
-                cursorState={cursorState}
-                setCursorState={setCursorState}
-                updateMyPresence={updateMyPresence}
-            />
+                <CursorChat
+                    cursor={cursor}
+                    cursorState={cursorState}
+                    setCursorState={setCursorState}
+                    updateMyPresence={updateMyPresence}
+                />
             )}
 
             {/* If cursor is in reaction selector mode, show the reaction selector */}
