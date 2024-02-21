@@ -221,68 +221,68 @@ type Props = {
 
     return (
         <ContextMenu>
-        <ContextMenuTrigger
-            className="relative flex h-full w-full flex-1 items-center justify-center"
-            id="canvas"
-            style={{
-            cursor: cursorState.mode === CursorMode.Chat ? "none" : "auto",
-            }}
-            onPointerMove={handlePointerMove}
-            onPointerLeave={handlePointerLeave}
-            onPointerDown={handlePointerDown}
-            onPointerUp={handlePointerUp}
-        >
-            <canvas ref={canvasRef} />
-
-            {/* Render the reactions */}
-            {reactions.map((reaction) => (
-                <FlyingReaction
-                    key={reaction.timestamp.toString()}
-                    x={reaction.point.x}
-                    y={reaction.point.y}
-                    timestamp={reaction.timestamp}
-                    value={reaction.value}
-                />
-            ))}
-
-            {/* If cursor is in chat mode, show the chat cursor */}
-            {cursor && (
-                <CursorChat
-                    cursor={cursor}
-                    cursorState={cursorState}
-                    setCursorState={setCursorState}
-                    updateMyPresence={updateMyPresence}
-                />
-            )}
-
-            {/* If cursor is in reaction selector mode, show the reaction selector */}
-            {cursorState.mode === CursorMode.ReactionSelector && (
-            <ReactionSelector
-                setReaction={(reaction) => {
-                setReaction(reaction);
+            <ContextMenuTrigger
+                className="relative flex h-full w-full flex-1 items-center justify-center"
+                id="canvas"
+                style={{
+                cursor: cursorState.mode === CursorMode.Chat ? "none" : "auto",
                 }}
-            />
-            )}
-
-            {/* Show the live cursors of other users */}
-            <LiveCursors others={others} />
-
-            {/* Show the comments */}
-            {/* <Comments /> */}
-        </ContextMenuTrigger>
-
-        <ContextMenuContent className="right-menu-content">
-            {shortcuts.map((item) => (
-            <ContextMenuItem
-                key={item.key}
-                className="right-menu-item"
-                onClick={() => handleContextMenuClick(item.name)}
+                onPointerMove={handlePointerMove}
+                onPointerLeave={handlePointerLeave}
+                onPointerDown={handlePointerDown}
+                onPointerUp={handlePointerUp}
             >
-                <p>{item.name}</p>
-                <p className="text-xs text-primary-grey-300">{item.shortcut}</p>
-            </ContextMenuItem>
-            ))}
-        </ContextMenuContent>
+                <canvas ref={canvasRef} />
+
+                {/* Render the reactions */}
+                {reactions.map((reaction) => (
+                    <FlyingReaction
+                        key={reaction.timestamp.toString()}
+                        x={reaction.point.x}
+                        y={reaction.point.y}
+                        timestamp={reaction.timestamp}
+                        value={reaction.value}
+                    />
+                ))}
+
+                {/* If cursor is in chat mode, show the chat cursor */}
+                {cursor && (
+                    <CursorChat
+                        cursor={cursor}
+                        cursorState={cursorState}
+                        setCursorState={setCursorState}
+                        updateMyPresence={updateMyPresence}
+                    />
+                )}
+
+                {/* If cursor is in reaction selector mode, show the reaction selector */}
+                {cursorState.mode === CursorMode.ReactionSelector && (
+                <ReactionSelector
+                    setReaction={(reaction) => {
+                    setReaction(reaction);
+                    }}
+                />
+                )}
+
+                {/* Show the live cursors of other users */}
+                <LiveCursors others={others} />
+
+                {/* Show the comments */}
+                {/* <Comments /> */}
+            </ContextMenuTrigger>
+
+            <ContextMenuContent className="right-menu-content">
+                {shortcuts.map((item) => (
+                <ContextMenuItem
+                    key={item.key}
+                    className="right-menu-item"
+                    onClick={() => handleContextMenuClick(item.name)}
+                >
+                    <p>{item.name}</p>
+                    <p className="text-xs text-primary-grey-300">{item.shortcut}</p>
+                </ContextMenuItem>
+                ))}
+            </ContextMenuContent>
         </ContextMenu>
     );
     };
