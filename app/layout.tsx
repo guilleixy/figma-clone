@@ -6,12 +6,12 @@ import { Room } from "./Room";
 const workSans = Work_Sans({ 
   subsets: ["latin"],
   variable: '--font-work-sans',
-  weight: ['400', '600', '700'],
+  weight: ['400', '600', '700']
 });
 
 export const metadata: Metadata = {
   title: "Figma Clone",
-  description: "A real-time Figma clone built with Liveblocks and Next.js",
+  description: "A Figma Clone built with Next.js",
 };
 
 export default function RootLayout({
@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${workSans.className} bg-primary-grey-200`}>
         <Room>
-          {children}
+          {children}          
         </Room>
       </body>
     </html>
