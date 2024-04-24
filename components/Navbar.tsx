@@ -12,8 +12,8 @@ import ActiveUsers from "./users/ActiveUsers";
 import { NewThread } from "./comments/NewThread";
 
 
-//, 
-const Navbar = ({ activeElement, imageInputRef, handleImageUpload, handleActiveElement }: NavbarProps) => {
+//, handleImageUpload, handleActiveElement
+const Navbar = ({ activeElement, imageInputRef }: NavbarProps) => {
   const isActive = (value: string | Array<ActiveElement>) =>
     (activeElement && activeElement.value === value) ||
     (Array.isArray(value) && value.some((val) => val?.value === activeElement?.value));
